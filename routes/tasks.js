@@ -18,7 +18,6 @@ module.exports = (io) => {
         try {
             const [tasks] = await pool.query('SELECT * FROM tasks');
             res.status(200).json(tasks);
-            io.emit('taskAdded', 'hello');
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
@@ -45,6 +44,7 @@ module.exports = (io) => {
             if (result.affectedRows === 0) {
                 return res.status(404).json({ error: 'Task not found' });
             }
+            io.emit('taskDeleted', { id });
             res.status(200).json({ message: 'Task deleted successfully' });
         } catch (err) {
             res.status(500).json({ error: err.message });
