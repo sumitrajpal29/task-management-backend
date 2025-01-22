@@ -11,17 +11,15 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: '*', // Replace '*' with your frontend URL for better security
+        origin: '*', 
         methods: ['GET', 'POST'],
     },
 });
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors()); // Enable CORS for Express routes
+app.use(cors()); 
 app.use(express.json());
 
-// Routes
 app.use('/tasks', taskRoutes(io));
 
 server.listen(PORT, () => {
