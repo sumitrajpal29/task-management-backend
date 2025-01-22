@@ -11,13 +11,13 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: '*', 
+        origin: '*',
         methods: ['GET', 'POST'],
     },
 });
 const PORT = process.env.PORT || 5000;
 
-app.use(cors()); 
+app.use(cors());
 app.use(express.json());
 
 app.use('/tasks', taskRoutes(io));
@@ -27,8 +27,8 @@ server.listen(PORT, () => {
 });
 
 io.on('connection', (socket) => {
-    console.log('New client connected');
+    console.log('New client connected ' + socket.id);
     socket.on('disconnect', () => {
-        console.log('Client disconnected');
+        console.log('Client disconnected ' + socket.id);
     });
 });
